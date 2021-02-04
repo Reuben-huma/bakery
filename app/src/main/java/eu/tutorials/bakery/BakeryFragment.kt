@@ -12,25 +12,30 @@ import eu.tutorials.bakery.model.BakeryViewModel
 
 class BakeryFragment : Fragment() {
 
-    private lateinit var binding: FragmentBakeryBinding
+    private var binding: FragmentBakeryBinding? = null
     private val viewModel: BakeryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentBakeryBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
+        binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             bakeryFragment = this@BakeryFragment
             bakeryViewModel = viewModel
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     fun onDessertClick() {
